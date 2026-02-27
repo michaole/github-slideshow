@@ -14,3 +14,74 @@
 				]
 			});
 		</script>
+
+		<script>
+		// Code-writing animation for slides
+		(function () {
+			function getKey(el) {
+				if (!el._codeAnimKey) {
+					el._codeAnimKey = 'ca-' + Math.random().toString(36).substr(2, 9);
+				}
+				return el._codeAnimKey;
+			}
+
+			var timers = {};
+
+			function stopAnim(el) {
+				var key = getKey(el);
+				if (timers[key]) {
+					clearInterval(timers[key]);
+					delete timers[key];
+				}
+			}
+
+			function startAnim(el) {
+				stopAnim(el);
+				var key = getKey(el);
+
+				// Save original text on first run
+				if (!el.hasAttribute('data-original-code')) {
+					el.setAttribute('data-original-code', el.textContent);
+				}
+				var code = el.getAttribute('data-original-code');
+				var speed = parseInt(el.getAttribute('data-speed') || '40', 10);
+
+				// Reset display: text node before cursor span
+				el.innerHTML = '<span class="code-cursor"></span>';
+				var cursor = el.querySelector('.code-cursor');
+				var i = 0;
+
+				timers[key] = setInterval(function () {
+					if (i >= code.length) {
+						clearInterval(timers[key]);
+						delete timers[key];
+						return;
+					}
+					cursor.insertAdjacentText('beforebegin', code[i]);
+					i++;
+				}, speed);
+			}
+
+			function processSlide(slide) {
+				if (!slide) return;
+				slide.querySelectorAll('code[data-code-animate]').forEach(startAnim);
+			}
+
+			function resetSlide(slide) {
+				if (!slide) return;
+				slide.querySelectorAll('code[data-code-animate]').forEach(function (el) {
+					stopAnim(el);
+					el.textContent = '';
+				});
+			}
+
+			Reveal.addEventListener('ready', function (e) {
+				processSlide(e.currentSlide);
+			});
+
+			Reveal.addEventListener('slidechanged', function (e) {
+				resetSlide(e.previousSlide);
+				processSlide(e.currentSlide);
+			});
+		}());
+		</script>
