@@ -12,6 +12,75 @@
 <!-- Theme used for syntax highlighting of code -->
 <link rel="stylesheet" href="{{site.baseurl}}/node_modules/reveal.js/lib/css/monokai.css">
 
+<!-- Code window animation styles -->
+<style>
+  .code-window {
+    background: #1e1e1e;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    text-align: left;
+    max-width: 680px;
+    margin: 0 auto;
+    font-family: 'Monaco', 'Menlo', 'Consolas', 'Courier New', monospace;
+  }
+  .code-window-header {
+    background: #323232;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+  }
+  .code-window-header .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 6px;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .dot-red    { background-color: #ff5f57; }
+  .dot-yellow { background-color: #ffbd2e; }
+  .dot-green  { background-color: #28c840; }
+  .code-window-title {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    color: #9e9e9e;
+    margin-right: 36px;
+  }
+  .code-window-body {
+    padding: 24px 28px;
+  }
+  .code-window-body pre {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  .code-window-body code {
+    font-family: 'Monaco', 'Menlo', 'Consolas', 'Courier New', monospace !important;
+    font-size: 15px !important;
+    line-height: 1.65 !important;
+    color: #abb2bf !important;
+    white-space: pre !important;
+    background: transparent !important;
+  }
+  .code-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background-color: #528bff;
+    vertical-align: text-bottom;
+    animation: cursor-blink 1s step-start infinite;
+    margin-left: 1px;
+  }
+  @keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+</style>
+
 <!-- Printing and PDF exports -->
 <script>
 	var link = document.createElement( 'link' );
