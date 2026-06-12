@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Judo 5.5 KYU – Fiszki</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #1a1a2e;
+      color: #eee;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 6px;
+      color: #e94560;
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      color: #aaa;
+      margin-bottom: 20px;
+    }
+
+    /* Category filter */
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .cat-btn {
+      padding: 6px 14px;
+      border: 2px solid #e94560;
+      border-radius: 20px;
+      background: transparent;
+      color: #e94560;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all .2s;
+    }
+
+    .cat-btn.active, .cat-btn:hover {
+      background: #e94560;
+      color: #fff;
+    }
+
+    /* Progress */
+    .progress-bar-wrap {
+      width: 100%;
+      max-width: 520px;
+      background: #16213e;
+      border-radius: 10px;
+      height: 8px;
+      margin-bottom: 10px;
+    }
+
+    .progress-bar {
+      height: 8px;
+      border-radius: 10px;
+      background: #e94560;
+      transition: width .4s;
+    }
+
+    .progress-text {
+      font-size: 0.8rem;
+      color: #aaa;
+      margin-bottom: 18px;
+    }
+
+    /* Card */
+    .card-container {
+      width: 100%;
+      max-width: 520px;
+      height: 260px;
+      perspective: 1000px;
+      cursor: pointer;
+      margin-bottom: 24px;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform .5s ease;
+    }
+
+    .card-container.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 18px;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,.4);
+    }
+
+    .card-front {
+      background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+      border: 2px solid #e94560;
+    }
+
+    .card-back {
+      background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+      border: 2px solid #57cc99;
+      transform: rotateY(180deg);
+    }
+
+    .card-category {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #e94560;
+      margin-bottom: 12px;
+    }
+
+    .card-back .card-category {
+      color: #57cc99;
+    }
+
+    .card-term {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .card-hint {
+      font-size: 0.75rem;
+      color: #888;
+      margin-top: 16px;
+    }
+
+    .card-definition {
+      font-size: 1.15rem;
+      color: #e0e0e0;
+      line-height: 1.5;
+    }
+
+    /* Navigation */
+    .nav {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .nav-btn {
+      padding: 10px 24px;
+      border: none;
+      border-radius: 12px;
+      background: #16213e;
+      color: #eee;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background .2s;
+      border: 2px solid #e94560;
+    }
+
+    .nav-btn:hover { background: #e94560; }
+
+    .shuffle-btn {
+      padding: 8px 16px;
+      border: 2px solid #57cc99;
+      border-radius: 12px;
+      background: transparent;
+      color: #57cc99;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .shuffle-btn:hover { background: #57cc99; color: #1a1a2e; }
+
+    /* Stats row */
+    .stats {
+      margin-top: 24px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .stat-btn {
+      padding: 8px 18px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      border: none;
+      transition: opacity .2s;
+    }
+
+    .stat-btn:hover { opacity: .85; }
+
+    .btn-known   { background: #57cc99; color: #1a1a2e; }
+    .btn-unknown { background: #e94560; color: #fff; }
+
+    .known-count, .unknown-count {
+      font-size: 0.75rem;
+      color: #aaa;
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    .stat-group { display: flex; flex-direction: column; align-items: center; }
+
+    /* Summary */
+    .summary {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .summary h2 { color: #57cc99; font-size: 1.4rem; }
+    .summary p  { color: #ccc; }
+
+    .restart-btn {
+      padding: 10px 28px;
+      background: #e94560;
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🥋 Judo 5.5 KYU – Fiszki</h1>
+<p class="subtitle">Kliknij kartę aby odkryć definicję</p>
+
+<div class="categories" id="categories"></div>
+
+<div class="progress-bar-wrap">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+<div class="progress-text" id="progressText"></div>
+
+<div class="card-container" id="card" onclick="flipCard()">
+  <div class="card-inner">
+    <div class="card-face card-front">
+      <div class="card-category" id="frontCategory"></div>
+      <div class="card-term" id="frontTerm"></div>
+      <div class="card-hint">dotknij aby zobaczyć definicję</div>
+    </div>
+    <div class="card-face card-back">
+      <div class="card-category" id="backCategory"></div>
+      <div class="card-definition" id="backDef"></div>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nav-btn" onclick="prevCard()">&#8592;</button>
+  <button class="shuffle-btn" onclick="shuffle()">&#x21C4; Losuj</button>
+  <button class="nav-btn" onclick="nextCard()">&#8594;</button>
+</div>
+
+<div class="stats">
+  <div class="stat-group">
+    <button class="stat-btn btn-known" onclick="markKnown()">&#10003; Znam</button>
+    <div class="known-count" id="knownCount">Znam: 0</div>
+  </div>
+  <div class="stat-group">
+    <button class="stat-btn btn-unknown" onclick="markUnknown()">&#10007; Uczę się</button>
+    <div class="unknown-count" id="unknownCount">Uczę się: 0</div>
+  </div>
+</div>
+
+<div class="summary" id="summary">
+  <h2>Koniec talii!</h2>
+  <p id="summaryText"></p>
+  <button class="restart-btn" onclick="restart()">&#x21BA; Zacznij od nowa</button>
+</div>
+
+<script>
+const ALL_CARDS = [
+  // ── HISTORIA ────────────────────────────────────────────────────────────
+  { cat: "Historia", term: "Judo",          def: "Japońska sztuka walki wręcz (BUDO); pierwsza olimpijska dyscyplina walki; twórcą jest prof. Jigoro Kano." },
+  { cat: "Historia", term: "Jigoro Kano",   def: "Twórca judo (1860–1938). Zebrał, usystematyzował i ulepszył chwyty starego ju-jitsu, usunął elementy zagrażające zdrowiu." },
+  { cat: "Historia", term: "Kodokan",        def: "Pierwsza szkoła judo założona przez Kano w Tokio w 1882 r. – rok uznany za początek istnienia judo." },
+  { cat: "Historia", term: "JU",             def: "Łagodność, ustępliwość, zwinność." },
+  { cat: "Historia", term: "DO",             def: "Droga, zasada, sposób." },
+
+  // ── ZASADY JUDO ─────────────────────────────────────────────────────────
+  { cat: "Zasady judo", term: "Zasada 1 – Ju", def: "Ustąp, aby zwyciężyć. Wykorzystuj siłę przeciwnika zamiast jej się przeciwstawiać." },
+  { cat: "Zasady judo", term: "Seiryoku zenyo", def: "Zasada 2: osiągnięcie maksimum efektu przy minimalnym wysiłku fizycznym i psychicznym." },
+  { cat: "Zasady judo", term: "Jita kyoei",     def: "Zasada 3: trenowanie dla wzajemnego dobra i korzyści." },
+
+  // ── POJĘCIA PODSTAWOWE ──────────────────────────────────────────────────
+  { cat: "Pojęcia", term: "Judoga",    def: "Strój do judo." },
+  { cat: "Pojęcia", term: "Judoka",    def: "Zawodnik trenujący judo." },
+  { cat: "Pojęcia", term: "Keikogi",   def: "Bluza judogi." },
+  { cat: "Pojęcia", term: "Zubon",     def: "Spodnie judogi." },
+  { cat: "Pojęcia", term: "Obi",       def: "Pas od judogi." },
+  { cat: "Pojęcia", term: "Tachi Waza",def: "Technika w stójce." },
+  { cat: "Pojęcia", term: "Ne Waza",   def: "Technika w parterze." },
+  { cat: "Pojęcia", term: "Randori",   def: "Walka szkoleniowa (sparring)." },
+
+  // ── TERMINOLOGIA ────────────────────────────────────────────────────────
+  { cat: "Terminologia", term: "Rei",          def: "Ukłon." },
+  { cat: "Terminologia", term: "Tori",         def: "Atakujący, wykonujący ćwiczenia." },
+  { cat: "Terminologia", term: "Uke",          def: "Broniący się – ten, na którym Tori wykonuje daną technikę." },
+  { cat: "Terminologia", term: "Kumi Kata",    def: "Uchwyt klasyczny." },
+  { cat: "Terminologia", term: "Maita",        def: "Poddaję się." },
+  { cat: "Terminologia", term: "Shisen Hontai",def: "Postawa neutralna (klasyczna)." },
+  { cat: "Terminologia", term: "Jigotai",      def: "Postawa obronna." },
+  { cat: "Terminologia", term: "Migi",         def: "Prawa strona." },
+  { cat: "Terminologia", term: "Hidari",       def: "Lewa strona." },
+
+  // ── TRZY FAZY RZUTU ─────────────────────────────────────────────────────
+  { cat: "Fazy rzutu", term: "Kuzushi",  def: "1. faza rzutu – wychylenie (wyprowadzenie z równowagi)." },
+  { cat: "Fazy rzutu", term: "Tsukuri",  def: "2. faza rzutu – wejście (ustawienie się do techniki)." },
+  { cat: "Fazy rzutu", term: "Kake",     def: "3. faza rzutu – rzut (wykonanie techniki)." },
+
+  // ── KOMENDY SĘDZIOWSKIE ─────────────────────────────────────────────────
+  { cat: "Sędziowanie", term: "Yuko",        def: "Najniższy punkt w walce (najniższa ocena rzutu)." },
+  { cat: "Sędziowanie", term: "Wazari",      def: "Średni punkt w walce." },
+  { cat: "Sędziowanie", term: "Ippon",       def: "Najwyższy punkt – kończy walkę." },
+  { cat: "Sędziowanie", term: "Shido",       def: "Kara w walce. Trzy shido = hansokumake." },
+  { cat: "Sędziowanie", term: "Hansokumake", def: "Dyskwalifikacja (3 × shido)." },
+  { cat: "Sędziowanie", term: "Sonomama",    def: "Bezruch – zatrzymanie walki (zawodnicy pozostają bez ruchu)." },
+
+  // ── PADY ────────────────────────────────────────────────────────────────
+  { cat: "Pady", term: "Zempo kaiten ukemi", def: "Pad w przód z przewrotem przez bark." },
+
+  // ── TECHNIKI – NAGE WAZA ────────────────────────────────────────────────
+  { cat: "Nage Waza", term: "Ouchi Gari", def: "Duże wewnętrzne zaczepienie nogi – technika rzutu." },
+  { cat: "Nage Waza", term: "O Goshi",    def: "Duże biodro – technika rzutu przez biodro." },
+
+  // ── TECHNIKI – KATAME WAZA ──────────────────────────────────────────────
+  { cat: "Katame Waza", term: "Tate Shiho Gatame", def: "Unieruchomienie w czterech punktach (pionowe) – technika parteru." },
+];
+
+let deck = [];
+let current = 0;
+let known = 0;
+let unknown = 0;
+let activeCategories = new Set(["Wszystkie"]);
+
+function allCats() {
+  return ["Wszystkie", ...new Set(ALL_CARDS.map(c => c.cat))];
+}
+
+function buildDeck() {
+  if (activeCategories.has("Wszystkie")) {
+    deck = [...ALL_CARDS];
+  } else {
+    deck = ALL_CARDS.filter(c => activeCategories.has(c.cat));
+  }
+  current = 0;
+  known = 0;
+  unknown = 0;
+  updateStats();
+}
+
+function renderCategories() {
+  const wrap = document.getElementById("categories");
+  wrap.innerHTML = "";
+  allCats().forEach(cat => {
+    const btn = document.createElement("button");
+    btn.className = "cat-btn" + (activeCategories.has(cat) ? " active" : "");
+    btn.textContent = cat;
+    btn.onclick = () => toggleCat(cat);
+    wrap.appendChild(btn);
+  });
+}
+
+function toggleCat(cat) {
+  if (cat === "Wszystkie") {
+    activeCategories = new Set(["Wszystkie"]);
+  } else {
+    activeCategories.delete("Wszystkie");
+    if (activeCategories.has(cat)) {
+      activeCategories.delete(cat);
+      if (activeCategories.size === 0) activeCategories.add("Wszystkie");
+    } else {
+      activeCategories.add(cat);
+    }
+  }
+  renderCategories();
+  buildDeck();
+  showCard();
+  hideSummary();
+}
+
+function showCard() {
+  const card = document.getElementById("card");
+  card.classList.remove("flipped");
+
+  if (deck.length === 0) { showSummary(); return; }
+  if (current >= deck.length) { showSummary(); return; }
+
+  const c = deck[current];
+  document.getElementById("frontCategory").textContent = c.cat;
+  document.getElementById("frontTerm").textContent = c.term;
+  document.getElementById("backCategory").textContent = c.cat;
+  document.getElementById("backDef").textContent = c.def;
+
+  const pct = deck.length ? ((current) / deck.length * 100) : 0;
+  document.getElementById("progressBar").style.width = pct + "%";
+  document.getElementById("progressText").textContent =
+    `Karta ${current + 1} z ${deck.length}`;
+}
+
+function flipCard() {
+  document.getElementById("card").classList.toggle("flipped");
+}
+
+function nextCard() {
+  if (current < deck.length - 1) { current++; showCard(); }
+  else showSummary();
+}
+
+function prevCard() {
+  if (current > 0) { current--; showCard(); }
+}
+
+function shuffle() {
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  current = 0;
+  known = 0;
+  unknown = 0;
+  updateStats();
+  showCard();
+  hideSummary();
+}
+
+function markKnown() {
+  known++;
+  updateStats();
+  nextCard();
+}
+
+function markUnknown() {
+  unknown++;
+  updateStats();
+  nextCard();
+}
+
+function updateStats() {
+  document.getElementById("knownCount").textContent = `Znam: ${known}`;
+  document.getElementById("unknownCount").textContent = `Uczę się: ${unknown}`;
+}
+
+function showSummary() {
+  document.getElementById("summary").style.display = "flex";
+  document.getElementById("progressText").textContent = `Koniec! Kart: ${deck.length}`;
+  document.getElementById("progressBar").style.width = "100%";
+  const total = known + unknown;
+  document.getElementById("summaryText").textContent =
+    total > 0
+      ? `Znasz ${known} z ${total} kart (${Math.round(known/total*100)}%).`
+      : `Przejrzano ${deck.length} kart.`;
+}
+
+function hideSummary() {
+  document.getElementById("summary").style.display = "none";
+}
+
+function restart() {
+  buildDeck();
+  showCard();
+  hideSummary();
+}
+
+// Init
+buildDeck();
+renderCategories();
+showCard();
+</script>
+</body>
+</html>
