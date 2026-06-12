@@ -25,13 +25,33 @@
       letter-spacing: 1px;
     }
 
-    .subtitle {
-      font-size: 0.85rem;
-      color: #aaa;
+    /* ── MODE SWITCHER ── */
+    .mode-switch {
+      display: flex;
+      gap: 0;
+      border: 2px solid #e94560;
+      border-radius: 24px;
+      overflow: hidden;
       margin-bottom: 20px;
     }
 
-    /* Category filter */
+    .mode-btn {
+      padding: 9px 22px;
+      border: none;
+      background: transparent;
+      color: #e94560;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all .2s;
+    }
+
+    .mode-btn.active {
+      background: #e94560;
+      color: #fff;
+    }
+
+    /* ── CATEGORY FILTER ── */
     .categories {
       display: flex;
       flex-wrap: wrap;
@@ -51,12 +71,9 @@
       transition: all .2s;
     }
 
-    .cat-btn.active, .cat-btn:hover {
-      background: #e94560;
-      color: #fff;
-    }
+    .cat-btn.active, .cat-btn:hover { background: #e94560; color: #fff; }
 
-    /* Progress */
+    /* ── PROGRESS ── */
     .progress-bar-wrap {
       width: 100%;
       max-width: 520px;
@@ -73,13 +90,9 @@
       transition: width .4s;
     }
 
-    .progress-text {
-      font-size: 0.8rem;
-      color: #aaa;
-      margin-bottom: 18px;
-    }
+    .progress-text { font-size: 0.8rem; color: #aaa; margin-bottom: 18px; }
 
-    /* Card */
+    /* ── FLASHCARD ── */
     .card-container {
       width: 100%;
       max-width: 520px;
@@ -97,9 +110,7 @@
       transition: transform .5s ease;
     }
 
-    .card-container.flipped .card-inner {
-      transform: rotateY(180deg);
-    }
+    .card-container.flipped .card-inner { transform: rotateY(180deg); }
 
     .card-face {
       position: absolute;
@@ -135,39 +146,15 @@
       margin-bottom: 12px;
     }
 
-    .card-back .card-category {
-      color: #57cc99;
-    }
+    .card-back .card-category { color: #57cc99; }
+    .card-term   { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .card-hint   { font-size: 0.75rem; color: #888; margin-top: 16px; }
+    .card-definition { font-size: 1.15rem; color: #e0e0e0; line-height: 1.5; }
 
-    .card-term {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 8px;
-    }
-
-    .card-hint {
-      font-size: 0.75rem;
-      color: #888;
-      margin-top: 16px;
-    }
-
-    .card-definition {
-      font-size: 1.15rem;
-      color: #e0e0e0;
-      line-height: 1.5;
-    }
-
-    /* Navigation */
-    .nav {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-    }
+    .nav { display: flex; gap: 14px; align-items: center; }
 
     .nav-btn {
       padding: 10px 24px;
-      border: none;
       border-radius: 12px;
       background: #16213e;
       color: #eee;
@@ -192,12 +179,7 @@
 
     .shuffle-btn:hover { background: #57cc99; color: #1a1a2e; }
 
-    /* Stats row */
-    .stats {
-      margin-top: 24px;
-      display: flex;
-      gap: 20px;
-    }
+    .stats { margin-top: 24px; display: flex; gap: 20px; }
 
     .stat-btn {
       padding: 8px 18px;
@@ -209,20 +191,15 @@
     }
 
     .stat-btn:hover { opacity: .85; }
-
     .btn-known   { background: #57cc99; color: #1a1a2e; }
     .btn-unknown { background: #e94560; color: #fff; }
 
     .known-count, .unknown-count {
-      font-size: 0.75rem;
-      color: #aaa;
-      text-align: center;
-      margin-top: 4px;
+      font-size: 0.75rem; color: #aaa; text-align: center; margin-top: 4px;
     }
 
     .stat-group { display: flex; flex-direction: column; align-items: center; }
 
-    /* Summary */
     .summary {
       display: none;
       flex-direction: column;
@@ -243,135 +220,266 @@
       font-size: 1rem;
       cursor: pointer;
     }
+
+    /* ── MATCH GAME ── */
+    #matchSection { width: 100%; max-width: 560px; display: none; flex-direction: column; align-items: center; }
+
+    .match-header {
+      font-size: 1rem;
+      color: #aaa;
+      margin-bottom: 6px;
+    }
+
+    .match-score-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+      align-items: center;
+    }
+
+    .heart { font-size: 1.4rem; transition: transform .2s; }
+    .heart.lost { filter: grayscale(1) opacity(.4); }
+
+    .match-round { font-size: 0.8rem; color: #aaa; margin-left: auto; }
+
+    .match-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .match-tile {
+      background: #16213e;
+      border: 3px solid #0f3460;
+      border-radius: 16px;
+      padding: 16px 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #eee;
+      cursor: pointer;
+      text-align: center;
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.3;
+      transition: border-color .15s, background .15s, transform .1s;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .match-tile:active { transform: scale(.96); }
+
+    .match-tile.term-tile  { border-color: #e94560; }
+    .match-tile.def-tile   { border-color: #3a7bd5; }
+
+    .match-tile.selected   { background: #2a2a5e; border-color: #ffd166 !important; color: #ffd166; transform: scale(1.03); }
+    .match-tile.correct    { background: #1a4a2e; border-color: #57cc99 !important; color: #57cc99; pointer-events: none; animation: popIn .3s ease; }
+    .match-tile.wrong      { animation: shake .4s ease; border-color: #e94560 !important; }
+    .match-tile.gone       { visibility: hidden; pointer-events: none; }
+
+    @keyframes popIn {
+      0%   { transform: scale(1.05); }
+      50%  { transform: scale(1.12); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%     { transform: translateX(-8px); }
+      40%     { transform: translateX(8px); }
+      60%     { transform: translateX(-6px); }
+      80%     { transform: translateX(6px); }
+    }
+
+    /* celebration overlay */
+    .celebration {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding: 28px;
+      background: #16213e;
+      border: 3px solid #57cc99;
+      border-radius: 24px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .celebration.show { display: flex; }
+    .celebration .big-emoji { font-size: 3.5rem; animation: bounce .5s ease infinite alternate; }
+    .celebration h2 { color: #57cc99; font-size: 1.5rem; }
+    .celebration p  { color: #ccc; font-size: 0.95rem; }
+
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-10px); }
+    }
+
+    .next-round-btn {
+      padding: 14px 36px;
+      background: #57cc99;
+      border: none;
+      border-radius: 14px;
+      color: #1a1a2e;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+
+    .next-round-btn:hover { opacity: .88; }
+
+    /* confetti canvas */
+    #confettiCanvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
   </style>
 </head>
 <body>
 
-<h1>🥋 Judo 5.5 KYU – Fiszki</h1>
-<p class="subtitle">Kliknij kartę aby odkryć definicję</p>
+<canvas id="confettiCanvas"></canvas>
+<h1>🥋 Judo 5.5 KYU</h1>
 
-<div class="categories" id="categories"></div>
-
-<div class="progress-bar-wrap">
-  <div class="progress-bar" id="progressBar"></div>
+<!-- MODE SWITCHER -->
+<div class="mode-switch">
+  <button class="mode-btn active" id="btnFlash" onclick="switchMode('flash')">📖 Fiszki</button>
+  <button class="mode-btn"        id="btnMatch" onclick="switchMode('match')">🔗 Dopasuj</button>
 </div>
-<div class="progress-text" id="progressText"></div>
 
-<div class="card-container" id="card" onclick="flipCard()">
-  <div class="card-inner">
-    <div class="card-face card-front">
-      <div class="card-category" id="frontCategory"></div>
-      <div class="card-term" id="frontTerm"></div>
-      <div class="card-hint">dotknij aby zobaczyć definicję</div>
+<!-- ══════════ FLASHCARD SECTION ══════════ -->
+<div id="flashSection">
+  <p style="font-size:.85rem;color:#aaa;margin-bottom:16px;text-align:center">Kliknij kartę aby odkryć definicję</p>
+
+  <div class="categories" id="categories"></div>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  <div class="progress-text" id="progressText"></div>
+
+  <div class="card-container" id="card" onclick="flipCard()">
+    <div class="card-inner">
+      <div class="card-face card-front">
+        <div class="card-category" id="frontCategory"></div>
+        <div class="card-term" id="frontTerm"></div>
+        <div class="card-hint">dotknij aby zobaczyć definicję</div>
+      </div>
+      <div class="card-face card-back">
+        <div class="card-category" id="backCategory"></div>
+        <div class="card-definition" id="backDef"></div>
+      </div>
     </div>
-    <div class="card-face card-back">
-      <div class="card-category" id="backCategory"></div>
-      <div class="card-definition" id="backDef"></div>
+  </div>
+
+  <div class="nav">
+    <button class="nav-btn" onclick="prevCard()">&#8592;</button>
+    <button class="shuffle-btn" onclick="shuffle()">&#x21C4; Losuj</button>
+    <button class="nav-btn" onclick="nextCard()">&#8594;</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat-group">
+      <button class="stat-btn btn-known" onclick="markKnown()">&#10003; Znam</button>
+      <div class="known-count" id="knownCount">Znam: 0</div>
+    </div>
+    <div class="stat-group">
+      <button class="stat-btn btn-unknown" onclick="markUnknown()">&#10007; Uczę się</button>
+      <div class="unknown-count" id="unknownCount">Uczę się: 0</div>
     </div>
   </div>
-</div>
 
-<div class="nav">
-  <button class="nav-btn" onclick="prevCard()">&#8592;</button>
-  <button class="shuffle-btn" onclick="shuffle()">&#x21C4; Losuj</button>
-  <button class="nav-btn" onclick="nextCard()">&#8594;</button>
-</div>
-
-<div class="stats">
-  <div class="stat-group">
-    <button class="stat-btn btn-known" onclick="markKnown()">&#10003; Znam</button>
-    <div class="known-count" id="knownCount">Znam: 0</div>
-  </div>
-  <div class="stat-group">
-    <button class="stat-btn btn-unknown" onclick="markUnknown()">&#10007; Uczę się</button>
-    <div class="unknown-count" id="unknownCount">Uczę się: 0</div>
+  <div class="summary" id="summary">
+    <h2>Koniec talii!</h2>
+    <p id="summaryText"></p>
+    <button class="restart-btn" onclick="restart()">&#x21BA; Zacznij od nowa</button>
   </div>
 </div>
 
-<div class="summary" id="summary">
-  <h2>Koniec talii!</h2>
-  <p id="summaryText"></p>
-  <button class="restart-btn" onclick="restart()">&#x21BA; Zacznij od nowa</button>
+<!-- ══════════ MATCH SECTION ══════════ -->
+<div id="matchSection">
+  <div class="match-header" id="matchHeader">Połącz słowo z jego znaczeniem!</div>
+  <div class="match-score-bar">
+    <span class="heart" id="h1">❤️</span>
+    <span class="heart" id="h2">❤️</span>
+    <span class="heart" id="h3">❤️</span>
+    <span class="match-round" id="matchRound"></span>
+  </div>
+
+  <div class="match-grid" id="matchGrid"></div>
+
+  <div class="celebration" id="celebration">
+    <div class="big-emoji" id="celebEmoji">🎉</div>
+    <h2 id="celebTitle">Świetnie!</h2>
+    <p id="celebMsg"></p>
+    <button class="next-round-btn" id="nextRoundBtn" onclick="nextRound()">Dalej →</button>
+  </div>
 </div>
 
 <script>
+/* ═══════════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════════ */
 const ALL_CARDS = [
-  // ── HISTORIA ────────────────────────────────────────────────────────────
-  { cat: "Historia", term: "Judo",          def: "Japońska sztuka walki wręcz (BUDO); pierwsza olimpijska dyscyplina walki; twórcą jest prof. Jigoro Kano." },
-  { cat: "Historia", term: "Jigoro Kano",   def: "Twórca judo (1860–1938). Zebrał, usystematyzował i ulepszył chwyty starego ju-jitsu, usunął elementy zagrażające zdrowiu." },
-  { cat: "Historia", term: "Kodokan",        def: "Pierwsza szkoła judo założona przez Kano w Tokio w 1882 r. – rok uznany za początek istnienia judo." },
-  { cat: "Historia", term: "JU",             def: "Łagodność, ustępliwość, zwinność." },
-  { cat: "Historia", term: "DO",             def: "Droga, zasada, sposób." },
-
-  // ── ZASADY JUDO ─────────────────────────────────────────────────────────
-  { cat: "Zasady judo", term: "Zasada 1 – Ju", def: "Ustąp, aby zwyciężyć. Wykorzystuj siłę przeciwnika zamiast jej się przeciwstawiać." },
-  { cat: "Zasady judo", term: "Seiryoku zenyo", def: "Zasada 2: osiągnięcie maksimum efektu przy minimalnym wysiłku fizycznym i psychicznym." },
-  { cat: "Zasady judo", term: "Jita kyoei",     def: "Zasada 3: trenowanie dla wzajemnego dobra i korzyści." },
-
-  // ── POJĘCIA PODSTAWOWE ──────────────────────────────────────────────────
-  { cat: "Pojęcia", term: "Judoga",    def: "Strój do judo." },
-  { cat: "Pojęcia", term: "Judoka",    def: "Zawodnik trenujący judo." },
-  { cat: "Pojęcia", term: "Keikogi",   def: "Bluza judogi." },
-  { cat: "Pojęcia", term: "Zubon",     def: "Spodnie judogi." },
-  { cat: "Pojęcia", term: "Obi",       def: "Pas od judogi." },
-  { cat: "Pojęcia", term: "Tachi Waza",def: "Technika w stójce." },
-  { cat: "Pojęcia", term: "Ne Waza",   def: "Technika w parterze." },
-  { cat: "Pojęcia", term: "Randori",   def: "Walka szkoleniowa (sparring)." },
-
-  // ── TERMINOLOGIA ────────────────────────────────────────────────────────
-  { cat: "Terminologia", term: "Rei",          def: "Ukłon." },
-  { cat: "Terminologia", term: "Tori",         def: "Atakujący, wykonujący ćwiczenia." },
-  { cat: "Terminologia", term: "Uke",          def: "Broniący się – ten, na którym Tori wykonuje daną technikę." },
-  { cat: "Terminologia", term: "Kumi Kata",    def: "Uchwyt klasyczny." },
-  { cat: "Terminologia", term: "Maita",        def: "Poddaję się." },
-  { cat: "Terminologia", term: "Shisen Hontai",def: "Postawa neutralna (klasyczna)." },
-  { cat: "Terminologia", term: "Jigotai",      def: "Postawa obronna." },
-  { cat: "Terminologia", term: "Migi",         def: "Prawa strona." },
-  { cat: "Terminologia", term: "Hidari",       def: "Lewa strona." },
-
-  // ── TRZY FAZY RZUTU ─────────────────────────────────────────────────────
-  { cat: "Fazy rzutu", term: "Kuzushi",  def: "1. faza rzutu – wychylenie (wyprowadzenie z równowagi)." },
-  { cat: "Fazy rzutu", term: "Tsukuri",  def: "2. faza rzutu – wejście (ustawienie się do techniki)." },
-  { cat: "Fazy rzutu", term: "Kake",     def: "3. faza rzutu – rzut (wykonanie techniki)." },
-
-  // ── KOMENDY SĘDZIOWSKIE ─────────────────────────────────────────────────
-  { cat: "Sędziowanie", term: "Yuko",        def: "Najniższy punkt w walce (najniższa ocena rzutu)." },
-  { cat: "Sędziowanie", term: "Wazari",      def: "Średni punkt w walce." },
-  { cat: "Sędziowanie", term: "Ippon",       def: "Najwyższy punkt – kończy walkę." },
-  { cat: "Sędziowanie", term: "Shido",       def: "Kara w walce. Trzy shido = hansokumake." },
-  { cat: "Sędziowanie", term: "Hansokumake", def: "Dyskwalifikacja (3 × shido)." },
-  { cat: "Sędziowanie", term: "Sonomama",    def: "Bezruch – zatrzymanie walki (zawodnicy pozostają bez ruchu)." },
-
-  // ── PADY ────────────────────────────────────────────────────────────────
-  { cat: "Pady", term: "Zempo kaiten ukemi", def: "Pad w przód z przewrotem przez bark." },
-
-  // ── TECHNIKI – NAGE WAZA ────────────────────────────────────────────────
-  { cat: "Nage Waza", term: "Ouchi Gari", def: "Duże wewnętrzne zaczepienie nogi – technika rzutu." },
-  { cat: "Nage Waza", term: "O Goshi",    def: "Duże biodro – technika rzutu przez biodro." },
-
-  // ── TECHNIKI – KATAME WAZA ──────────────────────────────────────────────
-  { cat: "Katame Waza", term: "Tate Shiho Gatame", def: "Unieruchomienie w czterech punktach (pionowe) – technika parteru." },
+  { cat: "Historia",     term: "Judo",              def: "Japońska sztuka walki wręcz (BUDO); pierwsza olimpijska dyscyplina walki; twórcą jest prof. Jigoro Kano." },
+  { cat: "Historia",     term: "Jigoro Kano",        def: "Twórca judo (1860–1938). Zebrał, usystematyzował i ulepszył chwyty starego ju-jitsu, usunął elementy zagrażające zdrowiu." },
+  { cat: "Historia",     term: "Kodokan",             def: "Pierwsza szkoła judo założona przez Kano w Tokio w 1882 r. – rok uznany za początek istnienia judo." },
+  { cat: "Historia",     term: "JU",                  def: "Łagodność, ustępliwość, zwinność." },
+  { cat: "Historia",     term: "DO",                  def: "Droga, zasada, sposób." },
+  { cat: "Zasady judo",  term: "Zasada 1 – Ju",       def: "Ustąp, aby zwyciężyć. Wykorzystuj siłę przeciwnika zamiast jej się przeciwstawiać." },
+  { cat: "Zasady judo",  term: "Seiryoku zenyo",       def: "Zasada 2: osiągnięcie maksimum efektu przy minimalnym wysiłku fizycznym i psychicznym." },
+  { cat: "Zasady judo",  term: "Jita kyoei",           def: "Zasada 3: trenowanie dla wzajemnego dobra i korzyści." },
+  { cat: "Pojęcia",      term: "Judoga",               def: "Strój do judo." },
+  { cat: "Pojęcia",      term: "Judoka",               def: "Zawodnik trenujący judo." },
+  { cat: "Pojęcia",      term: "Keikogi",              def: "Bluza judogi." },
+  { cat: "Pojęcia",      term: "Zubon",                def: "Spodnie judogi." },
+  { cat: "Pojęcia",      term: "Obi",                  def: "Pas od judogi." },
+  { cat: "Pojęcia",      term: "Tachi Waza",           def: "Technika w stójce." },
+  { cat: "Pojęcia",      term: "Ne Waza",              def: "Technika w parterze." },
+  { cat: "Pojęcia",      term: "Randori",              def: "Walka szkoleniowa (sparring)." },
+  { cat: "Terminologia", term: "Rei",                  def: "Ukłon." },
+  { cat: "Terminologia", term: "Tori",                 def: "Atakujący, wykonujący ćwiczenia." },
+  { cat: "Terminologia", term: "Uke",                  def: "Broniący się – ten, na którym Tori wykonuje daną technikę." },
+  { cat: "Terminologia", term: "Kumi Kata",            def: "Uchwyt klasyczny." },
+  { cat: "Terminologia", term: "Maita",                def: "Poddaję się." },
+  { cat: "Terminologia", term: "Shisen Hontai",        def: "Postawa neutralna (klasyczna)." },
+  { cat: "Terminologia", term: "Jigotai",              def: "Postawa obronna." },
+  { cat: "Terminologia", term: "Migi",                 def: "Prawa strona." },
+  { cat: "Terminologia", term: "Hidari",               def: "Lewa strona." },
+  { cat: "Fazy rzutu",   term: "Kuzushi",              def: "1. faza rzutu – wychylenie (wyprowadzenie z równowagi)." },
+  { cat: "Fazy rzutu",   term: "Tsukuri",              def: "2. faza rzutu – wejście (ustawienie się do techniki)." },
+  { cat: "Fazy rzutu",   term: "Kake",                 def: "3. faza rzutu – rzut (wykonanie techniki)." },
+  { cat: "Sędziowanie",  term: "Yuko",                 def: "Najniższy punkt w walce (najniższa ocena rzutu)." },
+  { cat: "Sędziowanie",  term: "Wazari",               def: "Średni punkt w walce." },
+  { cat: "Sędziowanie",  term: "Ippon",                def: "Najwyższy punkt – kończy walkę." },
+  { cat: "Sędziowanie",  term: "Shido",                def: "Kara w walce. Trzy shido = hansokumake." },
+  { cat: "Sędziowanie",  term: "Hansokumake",          def: "Dyskwalifikacja (3 × shido)." },
+  { cat: "Sędziowanie",  term: "Sonomama",             def: "Bezruch – zatrzymanie walki." },
+  { cat: "Pady",         term: "Zempo kaiten ukemi",   def: "Pad w przód z przewrotem przez bark." },
+  { cat: "Nage Waza",    term: "Ouchi Gari",           def: "Duże wewnętrzne zaczepienie nogi – technika rzutu." },
+  { cat: "Nage Waza",    term: "O Goshi",              def: "Duże biodro – technika rzutu przez biodro." },
+  { cat: "Katame Waza",  term: "Tate Shiho Gatame",    def: "Unieruchomienie w czterech punktach (pionowe) – technika parteru." },
 ];
 
-let deck = [];
-let current = 0;
-let known = 0;
-let unknown = 0;
+/* ═══════════════════════════════════════════════════
+   FLASHCARD LOGIC
+═══════════════════════════════════════════════════ */
+let deck = [], current = 0, known = 0, unknown = 0;
 let activeCategories = new Set(["Wszystkie"]);
 
-function allCats() {
-  return ["Wszystkie", ...new Set(ALL_CARDS.map(c => c.cat))];
-}
+function allCats() { return ["Wszystkie", ...new Set(ALL_CARDS.map(c => c.cat))]; }
 
 function buildDeck() {
-  if (activeCategories.has("Wszystkie")) {
-    deck = [...ALL_CARDS];
-  } else {
-    deck = ALL_CARDS.filter(c => activeCategories.has(c.cat));
-  }
-  current = 0;
-  known = 0;
-  unknown = 0;
+  deck = activeCategories.has("Wszystkie")
+    ? [...ALL_CARDS]
+    : ALL_CARDS.filter(c => activeCategories.has(c.cat));
+  current = 0; known = 0; unknown = 0;
   updateStats();
 }
 
@@ -392,12 +500,8 @@ function toggleCat(cat) {
     activeCategories = new Set(["Wszystkie"]);
   } else {
     activeCategories.delete("Wszystkie");
-    if (activeCategories.has(cat)) {
-      activeCategories.delete(cat);
-      if (activeCategories.size === 0) activeCategories.add("Wszystkie");
-    } else {
-      activeCategories.add(cat);
-    }
+    activeCategories.has(cat) ? activeCategories.delete(cat) : activeCategories.add(cat);
+    if (activeCategories.size === 0) activeCategories.add("Wszystkie");
   }
   renderCategories();
   buildDeck();
@@ -406,89 +510,298 @@ function toggleCat(cat) {
 }
 
 function showCard() {
-  const card = document.getElementById("card");
-  card.classList.remove("flipped");
-
-  if (deck.length === 0) { showSummary(); return; }
-  if (current >= deck.length) { showSummary(); return; }
-
+  document.getElementById("card").classList.remove("flipped");
+  if (!deck.length || current >= deck.length) { showSummary(); return; }
   const c = deck[current];
   document.getElementById("frontCategory").textContent = c.cat;
   document.getElementById("frontTerm").textContent = c.term;
   document.getElementById("backCategory").textContent = c.cat;
   document.getElementById("backDef").textContent = c.def;
-
-  const pct = deck.length ? ((current) / deck.length * 100) : 0;
+  const pct = (current / deck.length) * 100;
   document.getElementById("progressBar").style.width = pct + "%";
-  document.getElementById("progressText").textContent =
-    `Karta ${current + 1} z ${deck.length}`;
+  document.getElementById("progressText").textContent = `Karta ${current + 1} z ${deck.length}`;
 }
 
-function flipCard() {
-  document.getElementById("card").classList.toggle("flipped");
-}
-
-function nextCard() {
-  if (current < deck.length - 1) { current++; showCard(); }
-  else showSummary();
-}
-
-function prevCard() {
-  if (current > 0) { current--; showCard(); }
-}
+function flipCard() { document.getElementById("card").classList.toggle("flipped"); }
+function nextCard()  { if (current < deck.length - 1) { current++; showCard(); } else showSummary(); }
+function prevCard()  { if (current > 0) { current--; showCard(); } }
 
 function shuffle() {
   for (let i = deck.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [deck[i], deck[j]] = [deck[j], deck[i]];
   }
-  current = 0;
-  known = 0;
-  unknown = 0;
-  updateStats();
-  showCard();
-  hideSummary();
+  current = 0; known = 0; unknown = 0;
+  updateStats(); showCard(); hideSummary();
 }
 
-function markKnown() {
-  known++;
-  updateStats();
-  nextCard();
-}
-
-function markUnknown() {
-  unknown++;
-  updateStats();
-  nextCard();
-}
+function markKnown()   { known++;   updateStats(); nextCard(); }
+function markUnknown() { unknown++; updateStats(); nextCard(); }
 
 function updateStats() {
-  document.getElementById("knownCount").textContent = `Znam: ${known}`;
+  document.getElementById("knownCount").textContent   = `Znam: ${known}`;
   document.getElementById("unknownCount").textContent = `Uczę się: ${unknown}`;
 }
 
 function showSummary() {
   document.getElementById("summary").style.display = "flex";
-  document.getElementById("progressText").textContent = `Koniec! Kart: ${deck.length}`;
   document.getElementById("progressBar").style.width = "100%";
+  document.getElementById("progressText").textContent = `Koniec! Kart: ${deck.length}`;
   const total = known + unknown;
-  document.getElementById("summaryText").textContent =
-    total > 0
-      ? `Znasz ${known} z ${total} kart (${Math.round(known/total*100)}%).`
-      : `Przejrzano ${deck.length} kart.`;
+  document.getElementById("summaryText").textContent = total > 0
+    ? `Znasz ${known} z ${total} kart (${Math.round(known / total * 100)}%).`
+    : `Przejrzano ${deck.length} kart.`;
 }
 
-function hideSummary() {
-  document.getElementById("summary").style.display = "none";
+function hideSummary() { document.getElementById("summary").style.display = "none"; }
+function restart() { buildDeck(); showCard(); hideSummary(); }
+
+/* ═══════════════════════════════════════════════════
+   MATCH GAME LOGIC
+═══════════════════════════════════════════════════ */
+const ROUND_SIZE = 5;
+let matchPool   = [];   // shuffled copy of all cards
+let matchOffset = 0;    // how many cards used so far
+let lives       = 3;
+let matchScore  = 0;    // pairs matched this game
+let totalPairs  = 0;
+
+let selectedTerm = null;  // { el, idx }
+let selectedDef  = null;
+let roundPairs   = [];    // [{term, def, id}] for current round
+let matched      = 0;     // matched in this round
+let busy         = false;
+
+function startMatch() {
+  matchPool = [...ALL_CARDS].sort(() => Math.random() - .5);
+  matchOffset = 0;
+  lives = 3;
+  matchScore = 0;
+  totalPairs = matchPool.length;
+  updateHearts();
+  loadRound();
 }
 
-function restart() {
-  buildDeck();
-  showCard();
-  hideSummary();
+function loadRound() {
+  selectedTerm = null;
+  selectedDef  = null;
+  matched = 0;
+  busy = false;
+
+  document.getElementById("celebration").classList.remove("show");
+
+  const slice = matchPool.slice(matchOffset, matchOffset + ROUND_SIZE);
+  if (slice.length === 0) { showMatchWin(); return; }
+  roundPairs = slice.map((c, i) => ({ term: c.term, def: c.def, id: i }));
+
+  const used = matchOffset + slice.length;
+  document.getElementById("matchRound").textContent =
+    `${used} / ${totalPairs} par`;
+
+  renderMatchGrid(slice);
 }
 
-// Init
+function renderMatchGrid(slice) {
+  const grid = document.getElementById("matchGrid");
+  grid.innerHTML = "";
+
+  const terms = slice.map((c, i) => ({ text: c.term, id: i, type: "term" }))
+                     .sort(() => Math.random() - .5);
+  const defs  = slice.map((c, i) => ({ text: c.def,  id: i, type: "def"  }))
+                     .sort(() => Math.random() - .5);
+
+  // interleave: left col = terms, right col = defs, row by row
+  for (let r = 0; r < slice.length; r++) {
+    makeTile(grid, terms[r], "term-tile");
+    makeTile(grid, defs[r],  "def-tile");
+  }
+}
+
+function makeTile(grid, item, cls) {
+  const el = document.createElement("div");
+  el.className = "match-tile " + cls;
+  el.textContent = item.text;
+  el.dataset.id   = item.id;
+  el.dataset.type = item.type;
+  el.onclick = () => onTileClick(el, item);
+  grid.appendChild(el);
+}
+
+function onTileClick(el, item) {
+  if (busy) return;
+  if (el.classList.contains("correct") || el.classList.contains("gone")) return;
+
+  if (item.type === "term") {
+    if (selectedTerm) selectedTerm.el.classList.remove("selected");
+    if (selectedTerm && selectedTerm.el === el) { selectedTerm = null; return; }
+    selectedTerm = { el, id: item.id };
+    el.classList.add("selected");
+  } else {
+    if (selectedDef) selectedDef.el.classList.remove("selected");
+    if (selectedDef && selectedDef.el === el) { selectedDef = null; return; }
+    selectedDef = { el, id: item.id };
+    el.classList.add("selected");
+  }
+
+  if (selectedTerm && selectedDef) checkMatch();
+}
+
+function checkMatch() {
+  const tEl = selectedTerm.el, dEl = selectedDef.el;
+  const tId = selectedTerm.id, dId = selectedDef.id;
+
+  busy = true;
+
+  if (tId === dId) {
+    // correct
+    tEl.classList.remove("selected");
+    dEl.classList.remove("selected");
+    tEl.classList.add("correct");
+    dEl.classList.add("correct");
+    matchScore++;
+    matched++;
+
+    setTimeout(() => {
+      tEl.classList.add("gone");
+      dEl.classList.add("gone");
+      selectedTerm = null;
+      selectedDef  = null;
+      busy = false;
+
+      if (matched >= Math.min(ROUND_SIZE, matchPool.slice(matchOffset, matchOffset + ROUND_SIZE).length)) {
+        matchOffset += ROUND_SIZE;
+        setTimeout(showRoundCelebration, 250);
+      }
+    }, 500);
+  } else {
+    // wrong
+    tEl.classList.add("wrong");
+    dEl.classList.add("wrong");
+    loseLife();
+
+    setTimeout(() => {
+      tEl.classList.remove("wrong", "selected");
+      dEl.classList.remove("wrong", "selected");
+      selectedTerm = null;
+      selectedDef  = null;
+      busy = false;
+    }, 600);
+  }
+}
+
+function loseLife() {
+  if (lives > 0) lives--;
+  updateHearts();
+  if (lives === 0) {
+    setTimeout(showMatchLose, 700);
+  }
+}
+
+function updateHearts() {
+  ["h1","h2","h3"].forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.classList.toggle("lost", i >= lives);
+  });
+}
+
+const CELEBRATE = [
+  { emoji: "🎉", title: "Super!", msg: "Doskonale! Idziesz jak burza!" },
+  { emoji: "⭐", title: "Brawo!", msg: "Świetna robota, judoka!" },
+  { emoji: "🏆", title: "Rewelacja!", msg: "Jesteś mistrzem fiszek!" },
+  { emoji: "🥋", title: "OSU!", msg: "Kolejna runda pokonana!" },
+  { emoji: "🌟", title: "Niesamowite!", msg: "Tak trzymaj, sensei!" },
+];
+
+function showRoundCelebration() {
+  const c = CELEBRATE[Math.floor(Math.random() * CELEBRATE.length)];
+  document.getElementById("celebEmoji").textContent  = c.emoji;
+  document.getElementById("celebTitle").textContent  = c.title;
+  const remaining = matchPool.length - matchOffset;
+  document.getElementById("celebMsg").textContent = remaining > 0
+    ? `${c.msg} Zostało jeszcze ${remaining} par.`
+    : `${c.msg} Skończyłeś wszystkie pary! 🎊`;
+  document.getElementById("nextRoundBtn").textContent = remaining > 0 ? "Dalej →" : "Zagraj jeszcze raz!";
+  document.getElementById("nextRoundBtn").onclick = remaining > 0 ? nextRound : startMatch;
+  document.getElementById("celebration").classList.add("show");
+  launchConfetti();
+}
+
+function showMatchWin() {
+  document.getElementById("celebEmoji").textContent = "🥇";
+  document.getElementById("celebTitle").textContent = "Ukończyłeś wszystko!";
+  document.getElementById("celebMsg").textContent = `Połączyłeś wszystkie ${totalPairs} pary! Jesteś mistrzem judo!`;
+  document.getElementById("nextRoundBtn").textContent = "Zagraj jeszcze raz!";
+  document.getElementById("nextRoundBtn").onclick = startMatch;
+  document.getElementById("celebration").classList.add("show");
+  launchConfetti();
+}
+
+function showMatchLose() {
+  document.getElementById("celebEmoji").textContent = "💪";
+  document.getElementById("celebTitle").textContent = "Próbuj dalej!";
+  document.getElementById("celebMsg").textContent = "Straciłeś wszystkie serca. Spróbuj jeszcze raz!";
+  document.getElementById("nextRoundBtn").textContent = "Spróbuj jeszcze raz!";
+  document.getElementById("nextRoundBtn").onclick = startMatch;
+  document.getElementById("celebration").classList.add("show");
+}
+
+function nextRound() {
+  loadRound();
+}
+
+/* ═══════════════════════════════════════════════════
+   CONFETTI
+═══════════════════════════════════════════════════ */
+function launchConfetti() {
+  const canvas  = document.getElementById("confettiCanvas");
+  const ctx     = canvas.getContext("2d");
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const pieces = Array.from({ length: 80 }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * -canvas.height,
+    r: 6 + Math.random() * 8,
+    d: Math.random() * 80 + 20,
+    color: ["#e94560","#57cc99","#ffd166","#3a7bd5","#ff9ff3"][Math.floor(Math.random() * 5)],
+    tilt: Math.random() * 10 - 10,
+    speed: 2 + Math.random() * 3,
+  }));
+
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      p.y += p.speed;
+      p.tilt += 0.1;
+      ctx.beginPath();
+      ctx.ellipse(p.x, p.y, p.r, p.r / 2, p.tilt, 0, 2 * Math.PI);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+    });
+    frame++;
+    if (frame < 90) requestAnimationFrame(draw);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  draw();
+}
+
+/* ═══════════════════════════════════════════════════
+   MODE SWITCHER
+═══════════════════════════════════════════════════ */
+function switchMode(mode) {
+  const flashEl = document.getElementById("flashSection");
+  const matchEl = document.getElementById("matchSection");
+  document.getElementById("btnFlash").classList.toggle("active", mode === "flash");
+  document.getElementById("btnMatch").classList.toggle("active", mode === "match");
+  flashEl.style.display = mode === "flash" ? "" : "none";
+  matchEl.style.display = mode === "match" ? "flex" : "none";
+  if (mode === "match") startMatch();
+}
+
+/* ═══════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════ */
 buildDeck();
 renderCategories();
 showCard();
